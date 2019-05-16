@@ -59,3 +59,26 @@ typings/
 
 # next.js build output
 .next
+
+node_modules
+
+
+# Editor directories and files
+.idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+### Node template
+# Logs
+logs
+*.log
+npm-debug.log*
+
+build/Release
+dist/
+
+package-lock.json

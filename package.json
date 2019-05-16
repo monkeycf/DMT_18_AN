@@ -1,0 +1,11 @@
+{
+  "name": "DMT_18_AN",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {},
+  "devDependencies": {
+    "browser-sync": "^2.24.6",
+    "gulp": "^3.9.1",
+    "gulp-ejs": "^3.1.3"
+  }
+}

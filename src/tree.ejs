@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>动画期末</title>
+    <%- include include/publicCss.ejs %>
+    <style>
+        canvas {
+            position: absolute;
+            background: linear-gradient(
+                    to bottom,
+                    rgba(73, 192, 240, 1) 0%,
+                    rgba(168, 231, 255, 1) 100%
+            );
+        }
+    </style>
+</head>
+<body id="tree-app">
+
+<canvas></canvas>
+
+<%- include include/publicJs.ejs %>
+<script>
+    class Branch {
+        constructor(ctx, branches, leaves, currentHue,x, y, length, angle, speed, width) {
+            this.ctx = ctx;
+            this.branches = branches;
+            this.leaves = leaves;
+            this.x = x;
+            this.y = y;
+            this.curLength = 0;
+            this.length = length;
+            this.angle = angle;
+            this.interpolant = 0;
+            this.speed = speed;
+            this.width = width > 2 ? width : 2;
+            this.done = false;
+            this.lengthLimit = 50 + Math.random() * 30;
+            this.currentHue= currentHue;
+        }
+
+        draw() {
+            // 保存并重设初始位置
+            this.ctx.save();
+            this.ctx.translate(this.x, this.y);
+
+            // 旋转相应角度 + pi
+            this.ctx.rotate(this.angle + Math.PI);
+            this.ctx.beginPath();
+
+            // 设置y的值为负数，隐藏矩形间的空隙
+            this.ctx.moveTo(0, -5);
+            this.ctx.lineTo(0, this.interpolant * this.length);
+
+            // 创建从当前点到开始点的路径
+            this.ctx.closePath();
+            this.ctx.lineWidth = this.width;
+            this.ctx.stroke();
+
+            // 恢复之前保存的状态
+            this.ctx.restore();
+        }
+
+        update() {
+            if (!this.done) {
+                const x = this.x + Math.sin(this.angle) * this.interpolant * this.length;
+                const y = this.y - Math.cos(this.angle) * this.interpolant * this.length;
+                if (this.interpolant < 1) {
+                    this.interpolant += this.speed;
+
+                    // 长度小于150才添加树叶
+                    if (this.length < 150 && Math.random() > 0.9) {
+                        this.leaves.push(new Leaf(this.ctx,this.currentHue,x, y));
+                    }
+                } else {
+                    // 足够长才会长分支
+                    if (this.length >= this.lengthLimit) {
+                        const amount = 2 + Math.ceil(Math.random() * 2);
+
+                        // 从根随机生成分支
+                        for (let i = 0; i < amount; i++) {
+                            this.branches.push(
+                                new Branch(
+                                    this.ctx,
+                                    this.branches,
+                                    this.leaves,
+                                    this.currentHue,
+                                    x,
+                                    y,
+                                    this.length * (0.72 + Math.random() / 10),
+                                    this.angle + Math.sin(Math.random() * Math.PI * 2) * Math.PI / 4,
+                                    0.01 + Math.random() / 30,
+                                    this.width - 3
+                                )
+                            );
+                        }
+                    }
+                    this.done = true;
+                }
+            }
+        }
+    }
+
+    class Leaf {
+        constructor(ctx,currentHue, x, y) {
+            this.ctx = ctx;
+            this.x = x;
+            this.y = y;
+            this.length = 50 + Math.random() * 20;
+            this.scale = 0.01;
+            this.maxScale = 1 + Math.random() / 5;
+            this.speed = 0.05 + Math.random() / 20;
+            this.hue = Math.ceil(currentHue + Math.random() * 50);
+            this.lightness = Math.ceil(50 - Math.random() * 20);
+            this.rotation = Math.sin(Math.random() * 2 * Math.PI) * 5;
+        }
+
+        draw() {
+            this.ctx.strokeStyle = `hsl(${this.hue}, 60%, ${this.lightness}%)`;
+            this.ctx.fillStyle = `hsl(${this.hue}, 100%, ${this.lightness}%)`;
+            this.ctx.save();
+            this.ctx.translate(this.x, this.y);
+            this.ctx.scale(this.scale, this.scale);
+            this.ctx.rotate(this.rotation);
+
+
+            this.ctx.beginPath();
+            this.ctx.moveTo(0, 0);
+            // 绘制曲线
+            this.ctx.quadraticCurveTo(-20, 10, 0, this.length / 2);
+            this.ctx.quadraticCurveTo(20, 10, 0, 0);
+            this.ctx.closePath();
+            this.ctx.fill();
+            this.ctx.stroke();
+
+            // 画叶子枝干
+            this.ctx.beginPath();
+            this.ctx.moveTo(0, this.length / 2 - 10);
+            this.ctx.strokeStyle = "#0005";
+            this.ctx.lineTo(0, 0);
+            this.ctx.closePath();
+            this.ctx.stroke();
+
+            this.ctx.restore();
+        }
+
+        update() {
+            if (this.scale < this.maxScale) {
+                this.scale += this.speed;
+            }
+        }
+    }
+
+    new Vue({
+        el: '#tree-app',
+        data() {
+            return {
+                canvas: document.querySelector("canvas"),
+                ctx: document.querySelector("canvas").getContext("2d"),
+                branches: [], // 分支
+                leaves: [], // 叶子
+                trunkHeight: 170, // 树的高度
+                hues: [70, 20], // 颜色
+                hueIndex: 0,
+                currentHue: 70,
+                animFrame: null // 存储动画唯一id
+            }
+        },
+        created() {
+            this.init()
+        },
+        methods: {
+            init() {
+                let that = this
+                // 获取长宽
+                that.canvas.width = window.innerWidth;
+                that.canvas.height = window.innerHeight;
+
+                // 设置画笔颜色
+                that.ctx.strokeStyle = "#4e2816";
+
+                // 取消一个先前添加到计划中的动画帧请求.
+                let cancelAnimationFrame = window.cancelAnimationFrame || window.mozCancelAnimationFrame;
+                cancelAnimationFrame(that.animFrame);
+
+                // 清除空间
+                that.ctx.clearRect(0, 0, that.canvas.width, that.canvas.height);
+
+                // 将分支和叶子清空
+                that.branches.splice(0, that.branches.length);
+                that.leaves.splice(0, that.leaves.length);
+                that.currentHue = that.hues[that.hueIndex++ % that.hues.length];
+
+                that.branches.push(
+                    new Branch(
+                        that.ctx,
+                        that.branches,
+                        that.leaves,
+                        that.currentHue,
+                        0,
+                        0,
+                        that.trunkHeight,
+                        0,
+                        0.03,
+                        20
+                    )
+                );
+                that.branches.push(
+                    new Branch(
+                        that.ctx,
+                        that.branches,
+                        that.leaves,
+                        that.currentHue,
+                        -Math.random()*100-400,
+                        0,
+                        160 + Math.random() * 40,
+                        0,
+                        0.01 + Math.random() / 30,
+                        20
+                    )
+                );
+                that.branches.push(
+                    new Branch(
+                        that.ctx,
+                        that.branches,
+                        that.leaves,
+                        that.currentHue,
+                        Math.random() * 100 + 300,
+                        0,
+                        160 + Math.random() * 40,
+                        0,
+                        0.01 + Math.random() / 30,
+                        20
+                    )
+                );
+                that.loop();
+            },
+            loop() {
+                let that = this
+                // 保存状态
+                that.ctx.save();
+                // 将起始位置设置在底部中间
+                that.ctx.translate(that.canvas.width / 2, that.canvas.height);
+
+                // 遍历开始分支，如起始点有多个就有多颗树
+                that.branches.forEach((value, index) => {
+                    // 如果未被绘制，则绘制
+                    if (!value.done) {
+                        value.draw();
+                        value.update();
+                    } else {
+                        that.branches.splice(index, 1);
+                    }
+                });
+
+                that.leaves.forEach((value, index) => {
+                    if (value.scale < value.maxScale) {
+                        value.draw();
+                        value.update();
+                    } else {
+                        that.leaves.splice(index, 1);
+                    }
+                });
+                that.ctx.restore();
+
+                // 当动画改变时，才会触发
+                if (that.leaves.length || that.branches.length) {
+
+                    // 执行一个动画，并且要求浏览器在下次重绘之前调用指定的回调函数更新动画
+                    // @returns { long } id
+                    let requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
+
+                    that.animFrame = requestAnimationFrame(that.loop);
+                }
+            }
+        }
+    })
+</script>
+</body>
+</html>

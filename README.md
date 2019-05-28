@@ -12,3 +12,10 @@ index.html
 
 #兼容性
 chrome 74.0.3729.157
+
+#git
+https://github.com/monkeycf/DMT_18_AN.git
+
+#静态网页
+可以使用chrome访问（部分图片加载速度慢）
+https://monkeycf.github.io/DMT_CSR_AN

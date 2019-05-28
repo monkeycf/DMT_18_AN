@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>动画期末</title>
+    <%- include include/publicCss.ejs %>
+    <style type="text/less">
+        body {
+            background: black;
+            height: 100vh;
+            width: 100%;
+            display: grid;
+            place-content: center;
+            overflow: hidden;
+        }
+        .box {
+            &:after {
+                content: '';
+                width: 10px;
+                height: 80px;
+                border-top: 3px solid transparent;
+                animation: in-out 3s linear infinite;
+                position: absolute;
+                border-color: red;
+            }
+            &:nth-child(1) {
+                transform: rotate(0deg);
+            }
+            &:nth-child(2) {
+                transform: rotate(9deg);
+            }
+            &:nth-child(3) {
+                transform: rotate(18deg);
+            }
+            &:nth-child(4) {
+                transform: rotate(27deg);
+            }
+            &:nth-child(5) {
+                transform: rotate(36deg);
+            }
+            &:nth-child(6) {
+                transform: rotate(45deg);
+            }
+            &:nth-child(7) {
+                transform: rotate(54deg);
+            }
+            &:nth-child(8) {
+                transform: rotate(63deg);
+            }
+            &:nth-child(9) {
+                transform: rotate(72deg);
+            }
+            &:nth-child(10) {
+                transform: rotate(81deg);
+            }
+            &:nth-child(11) {
+                transform: rotate(90deg);
+            }
+            &:nth-child(12) {
+                transform: rotate(99deg);
+            }
+            &:nth-child(13) {
+                transform: rotate(108deg);
+            }
+            &:nth-child(14) {
+                transform: rotate(117deg);
+            }
+            &:nth-child(15) {
+                transform: rotate(126deg);
+            }
+            &:nth-child(16) {
+                transform: rotate(135deg);
+            }
+            &:nth-child(17) {
+                transform: rotate(144deg);
+            }
+            &:nth-child(18) {
+                transform: rotate(153deg);
+            }
+            &:nth-child(19) {
+                transform: rotate(162deg);
+            }
+            &:nth-child(20) {
+                transform: rotate(171deg);
+            }
+            &:nth-child(21) {
+                transform: rotate(180deg);
+            }
+            &:nth-child(22) {
+                transform: rotate(189deg);
+            }
+            &:nth-child(23) {
+                transform: rotate(198deg);
+            }
+            &:nth-child(24) {
+                transform: rotate(207deg);
+            }
+            &:nth-child(25) {
+                transform: rotate(216deg);
+            }
+            &:nth-child(26) {
+                transform: rotate(225deg);
+            }
+            &:nth-child(27) {
+                transform: rotate(234deg);
+            }
+            &:nth-child(28) {
+                transform: rotate(243deg);
+            }
+            &:nth-child(29) {
+                transform: rotate(252deg);
+            }
+            &:nth-child(30) {
+                transform: rotate(261deg);
+            }
+            &:nth-child(31) {
+                transform: rotate(270deg);
+            }
+            &:nth-child(32) {
+                transform: rotate(279deg);
+            }
+            &:nth-child(33) {
+                transform: rotate(288deg);
+            }
+            &:nth-child(34) {
+                transform: rotate(297deg);
+            }
+            &:nth-child(35) {
+                transform: rotate(306deg);
+            }
+            &:nth-child(36) {
+                transform: rotate(315deg);
+            }
+            &:nth-child(37) {
+                transform: rotate(324deg);
+            }
+            &:nth-child(38) {
+                transform: rotate(333deg);
+            }
+
+            &:nth-child(39) {
+                transform: rotate(342deg);
+            }
+            &:nth-child(40) {
+                transform: rotate(351deg);
+            }
+        }
+        @keyframes in-out {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+<body id="tree-app">
+<div class="main">
+</div>
+<canvas></canvas>
+<%- include include/publicJs.ejs %>
+<script>
+    let arr = ''
+    for (let i = 0; i < 40; i++)
+        arr += '<div class="box"></div>'
+    document.getElementsByClassName("main")[0].innerHTML = arr
+</script>
+</body>

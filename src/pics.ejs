@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>动画期末</title>
+    <%- include include/publicCss.ejs %>
+    <style type="text/less">
+        .big-box{
+            width: 100%;
+            overflow: hidden;
+            .small-box {
+                width: 400%;
+                img {
+                    height: 100vh;
+                    width: 25%;
+                    float: left;
+                }
+                animation:movePics 10s alternate infinite;
+            }
+        }
+        @keyframes movePics {
+            0% {
+                margin-left: 0;
+            }
+            5% {
+                margin-left: 0;
+            }
+            30% {
+                margin-left: -100%;
+            }
+            35% {
+                margin-left: -100%;
+            }
+            70% {
+                margin-left: -200%;
+            }
+            75% {
+                margin-left: -200%;
+            }
+            95% {
+                margin-left: -300%;
+            }
+            100% {
+                margin-left: -300%;
+            }
+        }
+    </style>
+</head>
+<body id="pics-app">
+<div class="big-box">
+    <div class="small-box">
+        <img src="<%- prefix %>image/pics/1.jpg" alt="">
+        <img src="<%- prefix %>image/pics/2.jpg" alt="">
+        <img src="<%- prefix %>image/pics/3.jpg" alt="">
+        <img src="<%- prefix %>image/pics/4.jpg" alt="">
+    </div>
+</div>
+<%- include include/publicJs.ejs %>
+<script>
+</script>
+</body>

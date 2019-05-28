@@ -5,12 +5,74 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <title>动画期末</title>
     <%- include include/publicCss.ejs %>
+    <style type="text/less">
+        .tittle {
+            text-align: center;
+            height: 8vh;
+            margin: 1vh;
+        }
+        .index-big {
+            display: grid;
+            grid-template-columns: repeat(3, calc(99.9% / 3));
+            grid-template-rows: repeat(3, 30vh);
+            justify-items: center;
+            div {
+                border: #b2b2b2 1px solid;
+                width: 100%;
+                background-color: #99ffdd;
+                text-align: center;
+                cursor: pointer;
+                &:hover {
+                    background-color: orange;
+                }
+                a {
+                    color: #333333;
+                    font-size: 20px;
+                }
+            }
+        }
+    </style>
 </head>
 <body>
-<!--   This is Body-->
-<a href="tree.html">tree</a>
-<a href="slideshow .html">slideshow </a>
-<a href="magic.html">magic</a>
-<%- include include/publicJs.ejs%>
+<h1 class="tittle">ABOUT SPIDERMAN</h1>
+<div class="index-big">
+    <div>
+        <h2>BANNER</h2>
+        <a href="rotate.html">SHOW</a>
+    </div>
+    <div>
+        <H2>WAITING</H2>
+        <a href="waiting.html">SHOW</a>
+    </div>
+    <div>
+        <h2>SLIDESHOW</h2>
+        <a href="pics.html">SHOW</a>
+    </div>
+    <div>
+        <H2>CHOOSE</H2>
+        <a href="switch.html">SHOW</a>
+    </div>
+    <div>
+        <h2>Spider-Man</h2>
+        <a href="fantasy.html">WELCOME</a>
+    </div>
+    <div>
+        <h2>SEARCH</h2>
+        <a href="keyboard.html">SHOW</a>
+    </div>
+    <div>
+        <h2>LOVE</h2>
+        <a href="magic.html">SHOW</a>
+    </div>
+    <div>
+        <H2>PEACE</H2>
+        <a href="earth.html">SHOW</a>
+    </div>
+    <div>
+        <H2>TREE</H2>
+        <a href="tree.html">SHOW</a>
+    </div>
+</div>
+<%- include include/publicJs.ejs %>
 </body>
 </html>

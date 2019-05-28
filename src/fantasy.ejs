@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>动画期末</title>
+    <%- include include/publicCss.ejs %>
+    <style type="text/less">
+        html, body {
+            margin: 0;
+            background: #000;
+            height: 100vh;
+            overflow: hidden;
+            #full:before {
+                content: '';
+                position: absolute;
+                z-index: 1;
+                top: 50%;
+                left: 50%;
+                width: 100vw;
+                height: 100vh;
+                transform: translate(-50%, -50%);
+                transform-origin: 0 0;
+                /*混合模式*/
+                mix-blend-mode: hard-light;
+                background: linear-gradient(45deg, deepskyblue, 10%, pink);
+            }
+            .full-p{
+                width: 100%;
+                text-align: center;
+                position: fixed;
+                top: 40%;
+                font-size: 40px;
+                letter-spacing:15px;
+                -webkit-text-stroke: 3px rgba(255,255,255,0.5);
+            }
+        }
+    </style>
+</head>
+<body>
+<div id="fantasy-app">
+    <div id="full">
+        <canvas id="mitosys"></canvas>
+        <p class="full-p">WELCOME TO SPIDERMAN</p>
+    </div>
+</div>
+<%- include include/publicJs.ejs %>
+<script>
+    const
+        canvas = document.getElementById('mitosys'),
+        ctx = canvas.getContext('2d'),
+        maxBalls = 10,
+        width = canvas.width = window.innerWidth,
+        height = canvas.height = window.innerHeight
+    let Balls = []
+
+    class Ball {
+        constructor() {
+            this.r = 100 + Math.random() * 50;
+
+            // 每次变换的位置大小
+            this.direction = {
+                x: 1 + Math.random() * 4,
+                y: 1 + Math.random() * 4
+            };
+
+            this.activePos = {
+                x: Math.random() * width,
+                y: Math.random() * height
+            };
+        }
+
+        draw() {
+            this.color = createRG(this.activePos.x, this.activePos.y, this.r);
+            ctx.fillStyle = this.color;
+            ctx.beginPath();
+
+            /*
+             * arc(x, y, r, sAngle, eAngle, counterclockwise)
+             * @param x 圆心横坐标
+             * @param y 圆心纵坐标
+             * @param r 圆半径
+             * @param sAngle 起始角
+             * @param eAngle 结束角
+             * @param counterclockwise true:顺时针
+             */
+            ctx.arc(this.activePos.x, this.activePos.y, this.r, 0, 2 * Math.PI, true);
+            ctx.fill();
+        }
+
+        update() {
+            this.activePos.x += this.direction.x;
+            this.activePos.y += this.direction.y;
+
+            if (this.activePos.x - this.r < 0 || this.activePos.x + this.r > width) {
+                // 改变x运动方向
+                this.direction.x *= -1;
+            }
+            if (this.activePos.y - this.r < 0 || this.activePos.y + this.r > height) {
+                // 改变y运动方向
+                this.direction.y *= -1;
+            }
+        }
+    }
+
+    const createRG = (x, y, r) => {
+        /*
+         * 创建一条放射颜色渐变
+         * createRadialGradient(xStart, yStart, radiusStart, xEnd, yEnd, radiusEnd)
+         * @param xStart 圆心横坐标
+         * @param yStart 圆心纵坐标
+         * @param radiusStart 圆开始的半径
+         * @param xEnd 圆结束横坐标
+         * @param yEnd 圆结束纵坐标
+         * @param radiusEnd 圆结束的半径
+        */
+        let bg = ctx.createRadialGradient(x - r / 2, y - r / 6, 0, x, y, r);
+
+        /*
+         * 在渐变中的某一点添加一个颜色变化
+         * addColorStop(offset, color)
+         * @param offset 渐变的位置 [0,1]
+         * @param color 显示的颜色
+         */
+        bg.addColorStop(0, '#ffffff');
+        bg.addColorStop(0.9, '#000000');
+        return bg;
+    }
+
+    const init = () => {
+        // globalCompositeOperation 属性设置新的图像绘制到目标的图像上
+        // lighten 显示源图像 + 目标图像
+        ctx.globalCompositeOperation = "lighten";
+
+        Balls = [];
+        for (let i = 0; i < maxBalls; i++) {
+            Balls.push(new Ball());
+        }
+        animate();
+    }
+
+    const animate = () => {
+        // 清空给定矩形内的指定像素
+        ctx.clearRect(0, 0, width, height);
+
+        // 递归调用
+        window.requestAnimationFrame(animate);
+        Balls.forEach(item => {
+            item.update();
+            item.draw();
+        });
+    }
+
+    init();
+</script>
+</body>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>动画期末</title>
+    <%- include include/publicCss.ejs %>
+    <style type="text/less">
+        #waiting-app {
+            background: linear-gradient(50deg, pink, 50%, deepskyblue);
+            color: aliceblue;
+            #wait {
+                height: 100vh;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                div {
+                    color: cyan;
+                    font-size: 50px;
+                }
+            }
+        }
+        @keyframes move {
+            0% {
+                transform: translate(0px, 0px);
+            }
+            100% {
+                transform: translate(0px, 50px);
+            }
+        }
+    </style>
+</head>
+<body id="waiting-app">
+
+<div id="wait" v-html="waitData"></div>
+
+<%- include include/publicJs.ejs %>
+<script>
+    new Vue({
+        el: '#wait',
+        computed: {
+            waitData() {
+                let temp = '';
+                for (let i = 1; i < 15; i++) {
+                    // 设置旋转颜色滤镜
+                    // 动画应该轮流反向播放 无限重复
+                    // 绘制贝塞尔曲线
+                    temp += "<div style='filter:hue-rotate(" + i * 10 + "deg);" +
+                        "animation:move 1.5s " + 0.15 * i + "s cubic-bezier(0.9, 0.5, 0.5, 1) alternate infinite;'>☀</div>"
+                }
+                return temp
+            }
+        }
+    })
+</script>
+</body>

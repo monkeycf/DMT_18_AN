@@ -5,20 +5,21 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <title>动画期末</title>
     <%- include include/publicCss.ejs %>
-    <style type="text/less" >
+    <style type="text/less">
         body{
-            background-color: black;
+            background: linear-gradient(blue, pink);
         }
         .magic-spinPicture {
-            width: 20%;
-            margin: 250px 40%;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             .magic-array {
                 margin: 20px;
                 width: 200px;
                 height: 200px;
                 transform-style: preserve-3d; /*子元素保留3d位置*/
                 animation: magic-spinPicture linear 20s infinite;
-
                 @keyframes magic-spinPicture {
                     from {
                         transform: rotateX(0deg) rotateY(0deg);
@@ -27,7 +28,6 @@
                         transform: rotateX(360deg) rotateY(360deg);
                     }
                 }
-
                 /*添加过度效果 所有属性改变 0.4s*/
                 .magic-big {
                     position: absolute;
@@ -36,93 +36,72 @@
                     opacity: 0.8;
                     transition: all .4s;
                 }
-
                 .magic-big img {
                     width: 200px;
                     height: 200px;
                 }
-
                 .magic-bigFront {
                     transform: rotateY(0deg) translateZ(100px);
                 }
-
                 .magic-bigBehind {
                     transform: rotateY(180deg) translateZ(100px);
                 }
-
                 .magic-bigLeft {
                     transform: rotateY(-90deg) translateZ(100px);
                 }
-
                 .magic-bigRight {
                     transform: rotateY(90deg) translateZ(100px);
                 }
-
                 .magic-bigUp {
                     transform: rotateX(90deg) translateZ(100px);
                 }
-
                 .magic-bigDown {
                     transform: rotateX(-90deg) translateZ(100px);
                 }
-
                 .magic-small {
                     position: absolute;
                     top: 50px;
                     left: 50px;
                 }
-
                 .magic-small img {
                     width: 100px;
                     height: 100px;
                 }
-
                 .magic-smallFront {
                     transform: rotateY(0deg) translateZ(50px);
                 }
-
                 .magic-smallBehind {
                     transform: rotateY(180deg) translateZ(50px);
                 }
-
                 .magic-smallLeft {
                     transform: rotateY(-90deg) translateZ(50px);
                 }
-
                 .magic-smallRight {
                     transform: rotateY(90deg) translateZ(50px);
                 }
-
                 .magic-smallUp {
                     transform: rotateX(90deg) translateZ(50px);
                 }
-
                 .magic-smallDown {
                     transform: rotateX(-90deg) translateZ(50px);
                 }
             }
-
             .magic-array:hover {
                 .magic-bigFront {
                     transform: rotateY(0deg) translateZ(200px);
                 }
-
                 .magic-bigBehind {
                     transform: rotateY(180deg) translateZ(200px);
                 }
-
                 .magic-bigLeft {
                     transform: rotateY(-90deg) translateZ(200px);
                 }
-
                 .magic-bigRight {
                     transform: rotateY(90deg) translateZ(200px);
                 }
-
                 .magic-bigUp {
                     transform: rotateX(90deg) translateZ(200px);
                 }
-
                 .magic-bigDown {
                     transform: rotateX(-90deg) translateZ(200px);
                 }
@@ -131,53 +110,48 @@
     </style>
 </head>
 <body id="magic-app">
-<!--旋转盒子-->
+
 <div class="magic-spinPicture">
-    <!--超大盒子-->
     <div class="magic-array">
         <div class="magic-big magic-bigFront">
-            <img src="https://cn.bing.com/th?id=OIP.GDIiNp0RDFtr0KQx-msHOgHaF_&pid=Api&rs=1&p=0" alt="">
+            <img src="<%- prefix %>image/pics/th.jpg" alt="">
         </div>
         <div class="magic-big magic-bigBehind">
-            <img src="https://cn.bing.com/th?id=OIP.GDIiNp0RDFtr0KQx-msHOgHaF_&pid=Api&rs=1&p=0" alt="">
+            <img src="<%- prefix %>image/pics/th.jpg" alt="">
         </div>
         <div class="magic-big magic-bigLeft">
-            <img src="https://cn.bing.com/th?id=OIP.GDIiNp0RDFtr0KQx-msHOgHaF_&pid=Api&rs=1&p=0" alt="">
+            <img src="<%- prefix %>image/pics/th.jpg" alt="">
         </div>
         <div class="magic-big magic-bigRight">
-            <img src="https://cn.bing.com/th?id=OIP.GDIiNp0RDFtr0KQx-msHOgHaF_&pid=Api&rs=1&p=0" alt="">
+            <img src="<%- prefix %>image/pics/th.jpg" alt="">
         </div>
         <div class="magic-big magic-bigUp">
-            <img src="https://cn.bing.com/th?id=OIP.GDIiNp0RDFtr0KQx-msHOgHaF_&pid=Api&rs=1&p=0" alt="">
+            <img src="<%- prefix %>image/pics/th.jpg" alt="">
         </div>
         <div class="magic-big magic-bigDown">
-            <img src="https://cn.bing.com/th?id=OIP.GDIiNp0RDFtr0KQx-msHOgHaF_&pid=Api&rs=1&p=0" alt="">
+            <img src="<%- prefix %>image/pics/th.jpg" alt="">
         </div>
 
         <div class="magic-small magic-smallFront">
-            <img src="https://cn.bing.com/th?id=OIP.GDIiNp0RDFtr0KQx-msHOgHaF_&pid=Api&rs=1&p=0" alt="">
+            <img src="<%- prefix %>image/pics/th.jpg" alt="">
         </div>
         <div class="magic-small magic-smallBehind">
-            <img src="https://cn.bing.com/th?id=OIP.GDIiNp0RDFtr0KQx-msHOgHaF_&pid=Api&rs=1&p=0" alt="">
+            <img src="<%- prefix %>image/pics/th.jpg" alt="">
         </div>
         <div class="magic-small magic-smallLeft">
-            <img src="https://cn.bing.com/th?id=OIP.GDIiNp0RDFtr0KQx-msHOgHaF_&pid=Api&rs=1&p=0" alt="">
+            <img src="<%- prefix %>image/pics/th.jpg" alt="">
         </div>
         <div class="magic-small magic-smallRight">
-            <img src="https://cn.bing.com/th?id=OIP.GDIiNp0RDFtr0KQx-msHOgHaF_&pid=Api&rs=1&p=0" alt="">
+            <img src="<%- prefix %>image/pics/th.jpg" alt="">
         </div>
         <div class="magic-small magic-smallUp">
-            <img src="https://cn.bing.com/th?id=OIP.GDIiNp0RDFtr0KQx-msHOgHaF_&pid=Api&rs=1&p=0" alt="">
+            <img src="<%- prefix %>image/pics/th.jpg" alt="">
         </div>
         <div class="magic-small magic-smallDown">
-            <img src="https://cn.bing.com/th?id=OIP.GDIiNp0RDFtr0KQx-msHOgHaF_&pid=Api&rs=1&p=0" alt="">
+            <img src="<%- prefix %>/image/pics/th.jpg" alt="">
         </div>
     </div>
 </div>
-<!--旋转盒子end-->
-
 
 <%- include include/publicJs.ejs %>
-<script>
-</script>
 </body>

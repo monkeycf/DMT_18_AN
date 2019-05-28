@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>动画期末</title>
+    <%- include include/publicCss.ejs %>
+    <style type="text/less">
+        body {
+            height: 100vh;
+            background:linear-gradient(red,black);
+            div {
+                position: fixed;
+                top: 40%;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                margin: auto;
+            }
+        }
+        .input {
+            display: none;
+            &:checked + .toggle-wrapper {
+                box-shadow: 0 8px 14px 0 rgba(#3957ee, 0.1);
+            }
+            &:checked + .toggle-wrapper > .selector {
+                left: calc(100% - 50px);
+                background-color: #3957ee;
+            }
+            &:checked ~ .notification > .selected:before {
+                content: "Yes";
+            }
+        }
+        .toggle-wrapper {
+            position: relative;
+            width: 120px;
+            height: 60px;
+            background-color: #eaeaea;
+            border-radius: 50px;
+            margin: auto;
+            cursor: pointer;
+            box-shadow: 0 8px 14px 0 rgba(#ee5f39, 0.1);
+            .selector {
+                width: 40px;
+                height: 40px;
+                position: absolute;
+                top: 50%;
+                left: 10px;
+                transform: translateY(-50%);
+                background-color: #ee5f39;
+                transition: left 0.25s ease;
+                border-radius: 50%;
+            }
+        }
+        .notification {
+            font-size: 20px;
+            width: 100%;
+            text-align: center;
+            color: white;
+            .selected:before {
+                content: "No";
+                font-size: 20px;
+                border-bottom: 2px solid;
+            }
+        }
+    </style>
+</head>
+<body id="switch-app">
+<div>
+    <label>
+        <input class="input" type="checkbox"/>
+        <div class="toggle-wrapper"><span class="selector"></span></div>
+        <p class="notification"><span class="selected"></span></p>
+    </label>
+</div>
+<%- include include/publicJs.ejs %>
+<script>
+</script>
+</body>
